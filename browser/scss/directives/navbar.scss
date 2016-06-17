@@ -2,9 +2,14 @@ nav {
 	&.navbar {
 		background: #00bcd4;
 		border-bottom: none;
+		padding: 15px;
 	}
 	a {
-		color: #ffffff;
+		&.navbar-brand {
+			/*font-size: 30px;
+			font-weight: 600;
+			padding-top: 20px;
+*/		}
 	}
 }
 

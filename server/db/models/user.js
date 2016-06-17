@@ -23,6 +23,9 @@ module.exports = function (db) {
         },
         google_id: {
             type: Sequelize.STRING
+        },
+        github_id: {
+            type: Sequelize.STRING
         }
     }, {
         instanceMethods: {

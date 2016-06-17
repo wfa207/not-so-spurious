@@ -14,5 +14,4 @@ app.config(function($stateProvider){
 		url: '/connectnow',
 		templateUrl: 'js/connectnow/connect.html',
 	});
-})
-
+});

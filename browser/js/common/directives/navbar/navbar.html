@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -14,13 +14,13 @@
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
             </li>
         </ul>
-        <form class="navbar-form navbar-left" role="search">
+        <!-- <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
                 <input type="text" ng-model="APISearch" class="form-control" placeholder="Search">
             </div>
             <button type="submit" class="btn btn-warning">Submit</button>
         </form>
-        <div ng-show="user" class="welcome">
+ -->        <div ng-show="user" class="welcome">
             <button type="button" class="btn btn-default btn-danger btn-md navbar-btn navbar-right" ng-click="logout()">Logout</button>
             <span> </span>
             <p class="navbar-text navbar-right">Signed in as: <strong>{{ user.email }}</strong></p>
