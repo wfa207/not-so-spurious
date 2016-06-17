@@ -3,10 +3,21 @@ nav {
 		background: #00bcd4;
 		border-bottom: none;
 	}
+	a {
+		color: #ffffff;
+	}
 }
 
 button {
 	&.navbar-right {
 		margin-left: 15px;
+	}
+}
+
+.form-group {
+	label {
+		&.control-label {
+			color: #ffffff;
+		}
 	}
 }

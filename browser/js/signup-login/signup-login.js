@@ -40,12 +40,12 @@ app.controller('SignupLoginCtrl', function ($scope, AuthService, $state, SignupL
                 authLogin(signinInfo);
             })
             .catch(function() {
-                $scope.error = 'There was an error with your request.';
+                $scope.error = 'This user already exists!';
             });
     }
 });
 
-app.factory('SignupLoginFactory', function($http) {
+app.factory('SignupLoginFactory', function($http, $q) {
 
     var SignupLoginFactory = {};
 
@@ -56,7 +56,10 @@ app.factory('SignupLoginFactory', function($http) {
 
         obj.createUser = function(user) {
             return $http.post('api/users', user)
-            .then(getData);
+            .then(getData)
+            .catch(function() {
+                return $q.reject({message: 'This user already exists!'});
+            })
         }
 
     })(SignupLoginFactory);

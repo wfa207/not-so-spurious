@@ -15,11 +15,17 @@ var User = require('../../../db/_db').model('user');
 
 	obj.post('/', function(req, res, next) {
 		User.findOrCreate({
-			where: req.body
+			where: {
+				email: req.body.email
+			},
+			defaults: {
+				password: req.body.password
+			}
 		})
 		.spread(function(user, created) {
 			if (!created) {
-				throw new Error('User already exists!');
+				var err = new Error('User already exists!');
+				throw err;
 			}
 			res.json(user);
 		})
