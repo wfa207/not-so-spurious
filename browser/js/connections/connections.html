@@ -1,0 +1,17 @@
+<div class="container">
+	<div ng-hide="$state.includes('ConnectionState.connect')">
+		<div class="row">
+			<div class="col-md-3" ng-repeat="connection in theConnections">
+			    <label for="{{connection.name}}"><img class="img" src="{{connection.logoUrl}}"/></label>
+				<input ng-model="connection.clicked" type="checkbox" id="{{connection.name}}" name="{{connection.name}}"/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<button ng-click="requestedConnections(theConnections)" type="submit" class="btn btn-primary text-center">Submit</button>
+			</div>
+		</div>
+	</div>
+	<ui-view></ui-view>
+</div>
