@@ -1,52 +1,68 @@
 'use strict';
 
 var passport = require('passport');
-var GitHubStrategy = require('passport-github2').Strategy;
+var GithubStrategy = require('passport-github2').Strategy;
 
 module.exports = function(app, db) {
 
 	var User = db.model('user');
+	var Github = db.model('github');
 
 	var githubConfig = app.getValue('env').GITHUB;
 
 	var githubCredentials = {
 		clientID: githubConfig.clientID,
         clientSecret: githubConfig.clientSecret,
-        callbackURL: githubConfig.callbackURL
+        callbackURL: githubConfig.callbackURL,
+        passReqToCallback: true
 	}
 
-	function verifyCallback(accessToken, refreshToken, profile, done) {
+	var verifyCallback = function(req, accessToken, refreshToken, profile, done) {
 
-        User.findOne({
-                where: {
-                    github_id: profile.id
-                }
-            })
-            .then(function (user) {
-                if (user) {
-                    return user;
-                } else {
-                    return User.create({
-                        github_id: profile.id
-                    });
-                }
-            })
-            .then(function (userToLogin) {
-                done(null, userToLogin);
-            })
-            .catch(function (err) {
-                console.error('Error creating user from GitHub authentication', err);
-                done(err);
-            });
+		// Create Github
+		// Keep data, but update / (delete) association
 
+		var sessionUser = req.user.dataValues;
+
+		if (!req.user) {
+			var err = new Error('You must be signed in to use the app!');
+			err.status = 401;
+			done(err);
+		} else {
+			Github.findOrCreate({
+				where: {
+					id: profile.id
+				},
+				defaults: {
+					accessToken: accessToken
+				}
+			})
+			.spread(function(github, created) {
+				User.findById(req.user.id, {
+					include: [Github]
+				})
+				.then(function(user) {
+					var input = user.githubId ? null : github;
+					user.setGithub(input)
+					.then(function(user) {
+						console.log('User: ', user);
+						done(null, user);
+					})
+					.catch(done);
+				})
+				.catch(done);
+			})
+			.catch(done);
+		}
+		
     };
 
-	passport.use(new GitHubStrategy(githubCredentials, verifyCallback));
+	passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-	app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+	app.get('/auth/github', passport.authorize('github', { scope: [ 'user:email', 'repo' ] }));
 
-	app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }), function(req, res, next) {
-		res.redirect('/');
-	});
-
+	app.get('/auth/github/callback', passport.authorize('github', {
+		successRedirect: '/',
+		failureRedirect: '/' 
+	}));
 }

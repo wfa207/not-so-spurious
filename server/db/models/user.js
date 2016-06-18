@@ -14,18 +14,6 @@ module.exports = function (db) {
         },
         salt: {
             type: Sequelize.STRING
-        },
-        twitter_id: {
-            type: Sequelize.STRING
-        },
-        facebook_id: {
-            type: Sequelize.STRING
-        },
-        google_id: {
-            type: Sequelize.STRING
-        },
-        github_id: {
-            type: Sequelize.STRING
         }
     }, {
         instanceMethods: {
