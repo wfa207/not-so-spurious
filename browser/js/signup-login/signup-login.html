@@ -1,21 +1,33 @@
 <div class="container">
 <div class="row">
-    <div class="col-xs-12 col-sm-offset-2 col-sm-8">
-    <form id="signup-login-form" name="signupLoginForm" ng-submit="signupLoginForm.$valid && sendLogin(signupLogin)">
-        <alert type="danger" ng-show="error">
-            {{ error }}
-        </alert>
-
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" ng-model="signupLogin.email" class="form-control" id="email" placeholder="Enter email">
+<div class="col-xs-12">
+    <form class="form-horizontal" id="signup-login-form" name="signupLoginForm" ng-submit="signupLoginForm.$valid">
+        <div class="form-group form-group-lg" ng-show="error">
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                <alert type="danger">
+                    {{ error }}
+                </alert>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" ng-model="signupLogin.password" class="form-control" id="login-password" placeholder="Password">
+        <div class="form-group form-group-lg">
+            <label for="email" class="col-xs-2 col-sm-offset-2 col-sm-2 control-label">Email</label>
+            <div class="col-xs-10 col-sm-6">
+                <input type="email" ng-model="signupLogin.email" class="form-control" id="email" placeholder="Enter email">
+            </div>
         </div>
-        <button type="submit" class="btn btn-default" ng-class="{ 'btn-success pull-right': signup }">{{ signup ? 'Sign up!' : 'Login'}}</button>
+        <div class="form-group form-group-lg">
+            <label class="col-xs-2 col-sm-offset-2 col-sm-2 control-label" for="login-password">Password</label>
+            <div class="col-xs-10 col-sm-6">
+                <input type="password" ng-model="signupLogin.password" class="form-control" id="login-password" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group form-group-lg">
+            <div class="col-xs-offset-2 col-xs-10 col-sm-offset-4 col-sm-6">
+                <button type="submit" class="btn btn-lg btn-primary" ng-click="sendLogin(signupLogin)">Login</button>
+                <button type="submit" class="btn btn-lg btn-success" ng-click="sendSignin(signupLogin)">Sign up</button>
+            </div>
+        </div>
     </form>
-    </div>
+</div>
 </div>
 </div>

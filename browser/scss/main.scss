@@ -12,7 +12,9 @@
 }
 
 body {
-  background: #fdfdfd;
+	background-color: #212121;
+	/*padding-top: 120px;*/
+  color: #ffffff;
 }
 
 @mixin clearfix {
@@ -28,6 +30,6 @@ body {
   margin: 0 auto;
 }
 
-@import 'directives/main';
+@import 'directives/navbar';
 @import 'tutorial/main';
 @import 'signup-login/main';
