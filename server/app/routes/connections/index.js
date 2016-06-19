@@ -11,7 +11,7 @@ module.exports = router;
 router.get('/', function (req, res, next) {
     Connection.findAll()
     .then(function (connections) {
-        res.send(connections);
+        res.json(req.account);
     })
     .catch(next);
 });

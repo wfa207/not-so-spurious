@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var _db = require('../../../db/_db');
 var User = _db.model('user');
-var GitHub = _db.model('github');
+var GithubAccount = _db.model('githubAccount');
+var GithubData = _db.model('githubData');
 
 (function(obj) {
 
@@ -15,7 +16,7 @@ var GitHub = _db.model('github');
 
 		User.findById(id, {
 			include: [
-				GitHub
+				{ model: GithubAccount, include: [GithubData] }
 			]
 		})
 		.then(function(response) {
@@ -50,7 +51,12 @@ var GitHub = _db.model('github');
 	});
 
 	obj.get('/:userId', function(req, res, next) {
-		res.json(req.loggedInUser);
+		var obj = {
+			loggedInUser: req.loggedInUser,
+			user: req.user,
+			account: req.account
+		}
+		res.json(obj);
 	});
 
 })(router);
