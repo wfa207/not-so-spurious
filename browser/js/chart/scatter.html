@@ -1,0 +1,120 @@
+<div class="container">
+	<div class="row nav-buttons">
+		<div class="col-md-12 text-center">
+			<div class="btn-group" data-toggle="buttons">
+			  <label class="btn btn-nav">
+			    <input ui-sref="chartState.line" type="checkbox" autocomplete="off"> <i class="fa fa-line-chart" aria-hidden="true"></i> Line Graphs
+			  </label>
+			  <label class="btn btn-nav active">
+			    <input ui-sref="chartState.scatter" type="checkbox" checked autocomplete="off"> <i class="fa fa-circle-o" aria-hidden="true"></i> Scatter Plots
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container chart">
+	
+	<!-- Fitbit and Github -->
+
+	<!-- Scatter -->
+
+	<div class="graph-title-section">
+
+		<div class="row graph-title-row">
+			<div class="col-md-12 text-center">
+				<h3 class="chart-green">Number of Fitbit Steps</h3>
+				<h5 class="chart-gray">correlation with</h5>
+				<h3 class="chart-red">Number of Github Commits</h3>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<linechart data="dataScatter" options="scatterFitGit"></linechart>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+	<div class="row text-center graph-body-section">
+		<strong>{{correlationStringGenerator(fitGitCor)}}</strong>
+	</div>
+
+
+
+<!-- /---------------------------------/ -->
+
+
+
+	<!-- Fitbit and Slack -->
+
+	<!-- Scatter -->
+
+	<div class="graph-title-section">
+
+		<div class="row graph-title-row">
+			<div class="col-md-12 text-center">
+				<h3 class="chart-green">Number of Fitbit Steps</h3>
+				<h5 class="chart-gray">correlation with</h5>
+				<h3 class="chart-red">Number of Slack Messages</h3>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<linechart data="dataScatter" options="scatterFitSlack"></linechart>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+	<div class="row text-center graph-body-section">
+		<strong>{{correlationStringGenerator(fitSlackCor)}}</strong>
+	</div>
+
+
+
+
+	<!-- /---------------------------------/ -->
+
+
+
+		<!-- Github and Slack -->
+
+		<!-- Scatter -->
+
+		<div class="graph-title-section">
+
+			<div class="row graph-title-row">
+				<div class="col-md-12 text-center">
+					<h3 class="chart-green">Number of Github Commits</h3>
+					<h5 class="chart-gray">correlation with</h5>
+					<h3 class="chart-red">Number of Slack Messages</h3>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<linechart data="dataScatter" options="scatterGitSlack"></linechart>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+
+		<div class="row text-center graph-body-section">
+			<strong>{{correlationStringGenerator(gitSlackCor)}}</strong>
+		</div>
+
+
+</div>
+
+
+

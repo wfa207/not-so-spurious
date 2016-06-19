@@ -1,4 +1,12 @@
-app.controller('chartController', function($scope, userData){
+app.controller('chartController', function($scope, userData, $state, $timeout){
+
+	// sends user immediately to the line graphs page as soon as the resolve is complete
+	if($state.current.name === 'chartState'){	
+		$timeout(function() {
+	    	$state.go('chartState.line');
+	    }, 0);
+	}
+
 
 	$scope.userData = userData;
 
@@ -6,21 +14,30 @@ app.controller('chartController', function($scope, userData){
 	var githubArr = [];
 	var slackArr = [];
 
+	var fitbitArrObj = [];
+	var githubArrObj = [];
+	var slackArrObj = [];
+
 	function getValForRange(name, cat, valType, val, startDate, endDate){
 		var dateArray = [];
+		var i = 0;
 
 		cat.forEach(function(item){
 			if(new Date(item.date).valueOf() >= startDate && new Date(item.date).valueOf() <= endDate){
 				dateArray.push(item[val])
 				if(name === 'fitbit'){
 					fitbitArr.push(item[val]);
+					fitbitArrObj.push({x: i, val_0: item[val]});
 				}
 				else if(name === 'github'){
 					githubArr.push(item[val]);
+					githubArrObj.push({x: i, val_0: item[val]});
 				} 
 				else if(name === 'slack'){
 					slackArr.push(item[val]);
+					slackArrObj.push({x: i, val_0: item[val]});
 				}
+				i++
 			}
 		});
 
@@ -90,14 +107,19 @@ app.controller('chartController', function($scope, userData){
 
 
 	$scope.fitGitCor = calculate(fitbitArr, githubArr)
-	$scope.fitSlackCor = calculate(fitbitArr, githubArr)
-	$scope.gitSlackCor = calculate(fitbitArr, githubArr)
+	$scope.fitSlackCor = calculate(fitbitArr, slackArr)
+	$scope.gitSlackCor = calculate(githubArr, slackArr)
 
-
+	$scope.correlationStringGenerator = function(c){
+		if(c < -.7) return 'The correlation coefficient is ' + c + '. This indicates a strong negative association.';
+		if(c >= -.7 && c < -.3) return 'The correlation coefficient is ' + c + '. This indicates a weak negative association.';
+		if(c >= -.3 && c < .3) return 'The correlation coefficient is ' + c + '. This indicates little or no association.';
+		if(c >= .3 && c < .7) return 'The correlation coefficient is ' + c + '. This indicates a weak positive association.';
+		if(c >= .7) return 'The correlation coefficient is ' + c + '. This indicates a strong positive association.';
+	}
 
 	var fitGitData = function (fitbitArr, githubArr){
 		var arr = [];
-		console.log(fitbitArr)
 		for(var i = 0; i < fitbitArr.length; i++){
 			arr.push({x: fitbitArr[i], val_0: githubArr[i]})
 		}
@@ -108,7 +130,12 @@ app.controller('chartController', function($scope, userData){
 
 	// Graph Options
 
-    $scope.options = {
+
+
+	// Fitbit and Github
+
+	//Scatter graph
+    $scope.scatterFitGit = {
       
       series: [
         {
@@ -125,15 +152,151 @@ app.controller('chartController', function($scope, userData){
 		margin: { top: 5 }
     };
 
+    //Line graph
+    $scope.lineFitGit = {
+      
+      series: [
+        {
+          dataset: "fitbitArrObj",
+          axis: "y",
+          key: 'val_0', 
+          label: 'Steps:', 
+          type: ['dot', 'line'],
+          color: "rgb(126, 181, 63)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        },
+        {
+          dataset: "githubArrObj",
+          axis: "y2",
+          key: 'val_0', 
+          label: 'Commits:', 
+          type: ['dot', 'line'],
+          color: "rgb(200, 96, 69)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        }
+      ],
+		axes: { x: { key: "x" } },
+		margin: { top: 5 }
+    };
 
-	$scope.data = {
+
+
+
+
+    // Fitbit and Slack
+
+    //Scatter graph
+    $scope.scatterFitSlack = {
+          
+      series: [
+        {
+          dataset: "fitSlackData",
+          key: 'val_0', 
+          label: 'Messages:', 
+          type: ['dot'],
+          color: "rgb(126, 181, 63)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        }
+      ],
+		axes: { x: { key: "x" } },
+		margin: { top: 5 }
+    };
+
+    //Line graph
+    $scope.lineFitSlack = {
+      
+      series: [
+        {
+          dataset: "fitbitArrObj",
+          axis: "y",
+          key: 'val_0', 
+          label: 'Steps:', 
+          type: ['dot', 'line'],
+          color: "rgb(126, 181, 63)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        },
+        {
+          dataset: "slackArrObj",
+          axis: "y2",
+          key: 'val_0', 
+          label: 'Messages:', 
+          type: ['dot', 'line'],
+          color: "rgb(200, 96, 69)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        }
+      ],
+		axes: { x: { key: "x" } },
+		margin: { top: 5 }
+    };
+
+
+
+    // Github and Slack
+
+    //Scatter graph
+    $scope.scatterGitSlack = {
+          
+      series: [
+        {
+          dataset: "gitSlackData",
+          key: 'val_0', 
+          label: 'Messages:', 
+          type: ['dot'],
+          color: "rgb(126, 181, 63)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        }
+      ],
+		axes: { x: { key: "x" } },
+		margin: { top: 5 }
+    };
+
+    //Line graph
+    $scope.lineGitSlack = {
+      
+      series: [
+        {
+          dataset: "githubArrObj",
+          axis: "y",
+          key: 'val_0', 
+          label: 'Steps:', 
+          type: ['dot', 'line'],
+          color: "rgb(126, 181, 63)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        },
+        {
+          dataset: "slackArrObj",
+          axis: "y2",
+          key: 'val_0', 
+          label: 'Messages:', 
+          type: ['dot', 'line'],
+          color: "rgb(200, 96, 69)",
+          interpolation: {mode: 'cardinal', tension: 0.7},
+          visible: true,
+        }
+      ],
+		axes: { x: { key: "x" } },
+		margin: { top: 5 }
+    };
+
+
+	$scope.dataScatter = {
 		fitGitData: fitGitData(fitbitArr, githubArr),
 		fitSlackData: fitGitData(fitbitArr, slackArr),
 		gitSlackData: fitGitData(githubArr, slackArr)
 	};
 
-
-
+	$scope.dataLine = {
+		fitbitArrObj,
+		githubArrObj,
+		slackArrObj
+	};
 
 })
 
