@@ -45,32 +45,31 @@
 	</div>
 
 
-	<h1>Angular.js / Bootstrap UI Datepicker</h1>
-
 	<div class="row">
-		<pre>Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+		
 		<div class="col-md-2"></div>
+
 		<div class="col-md-4">
-			<div >
-			    <pre>Selected date is: <em>{{dtg | date:'fullDate' }}</em></pre>
-
-
-			    <div class="row">
-			        <div class="col-md-6">
-			            <p class="input-group">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-			              
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dtg" is-open="opened2" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-			              <span class="input-group-btn">
-			                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button><br>
-			                <button class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-			              </span>
-			            </p>
-			        </div>
-			    </div>
+			<pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+            <p class="input-group">
+            	<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close" />
+            	<span class="input-group-btn">
+            		<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button><br>
+            	</span>
+            </p>
 		</div>
-		<div class="col-md-2"></div>
 
+		<div class="col-md-4">
+			<pre>Selected date is: <em>{{dtg | date:'fullDate' }}</em></pre>
+            <p class="input-group">
+            	<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dtg" is-open="opened2" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close" />
+            	<span class="input-group-btn">
+            		<button class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            	</span>
+            </p>
+		</div>
+
+		<div class="col-md-2"></div>
 
 	</div>
 

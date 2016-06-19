@@ -8,6 +8,11 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 	}
 
 
+	$scope.getDates = function(date1, date2){
+		$scope.date1 = date1;
+		$scope.date2 = date2;
+	}
+
 	$scope.userData = userData;
 
 	var fitbitArr = [];
@@ -106,10 +111,12 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 	};
 
 
+	// Correlation coefficients between datasets
 	$scope.fitGitCor = calculate(fitbitArr, githubArr)
 	$scope.fitSlackCor = calculate(fitbitArr, slackArr)
 	$scope.gitSlackCor = calculate(githubArr, slackArr)
 
+	// Creating string message about correlations
 	$scope.correlationStringGenerator = function(c){
 		if(c < -.7) return 'The correlation coefficient is ' + c + '. This indicates a strong negative association.';
 		if(c >= -.7 && c < -.3) return 'The correlation coefficient is ' + c + '. This indicates a weak negative association.';
@@ -118,7 +125,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 		if(c >= .7) return 'The correlation coefficient is ' + c + '. This indicates a strong positive association.';
 	}
 
-	var fitGitData = function (fitbitArr, githubArr){
+	var scatterDataGenerator = function (fitbitArr, githubArr){
 		var arr = [];
 		for(var i = 0; i < fitbitArr.length; i++){
 			arr.push({x: fitbitArr[i], val_0: githubArr[i]})
@@ -129,7 +136,6 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 
 
 	// Graph Options
-
 
 
 	// Fitbit and Github
@@ -180,8 +186,6 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 		axes: { x: { key: "x" } },
 		margin: { top: 5 }
     };
-
-
 
 
 
@@ -287,9 +291,9 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 
 
 	$scope.dataScatter = {
-		fitGitData: fitGitData(fitbitArr, githubArr),
-		fitSlackData: fitGitData(fitbitArr, slackArr),
-		gitSlackData: fitGitData(githubArr, slackArr)
+		fitGitData: scatterDataGenerator(fitbitArr, githubArr),
+		fitSlackData: scatterDataGenerator(fitbitArr, slackArr),
+		gitSlackData: scatterDataGenerator(githubArr, slackArr)
 	};
 
 	$scope.dataLine = {
@@ -299,31 +303,27 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 	};
 
 
-$scope.today = function() {
-    $scope.dt = new Date();
-};
-
-$scope.today();
 
 
-  $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.opened = true;
-  };
-  
-  $scope.open2 = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.opened2 = true;
-  };
+	// Date Picker
 
-  $scope.dateOptions = {
-    'year-format': "'yy'",
-    'starting-day': 1
-  };
+	$scope.today = function() {
+	    $scope.dt = new Date();
+	};
 
-  $scope.format = 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'
+	$scope.open = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.opened = true;
+	};
+
+	$scope.open2 = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope.opened2 = true;
+	};
+
+	$scope.format = 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'
 
 })
 
