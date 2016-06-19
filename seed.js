@@ -306,222 +306,222 @@ var seedGithubs = function () {
         },
         {
             date: '2016-01-02 18:54:06.853',
-            commits: 5634,
+            commits: 3,
             userId: 1
         },        
         {
             date: '2016-01-03 18:54:06.853',
-            commits: 4523,
+            commits: 5,
             userId: 1
         },        
         {
             date: '2016-01-04 18:54:06.853',
-            commits: 15754,
+            commits: 2,
             userId: 1
         },        
         {
             date: '2016-02-05 18:54:06.853',
-            commits: 3345,
+            commits: 5,
             userId: 1
         },        
         {
             date: '2016-02-06 18:54:06.853',
-            commits: 6547,
+            commits: 6,
             userId: 1
         },        
         {
             date: '2016-02-07 18:54:06.853',
-            commits: 1233,
+            commits: 7,
             userId: 1
         },        
         {
             date: '2016-03-08 18:54:06.853',
-            commits: 5466,
+            commits: 12,
             userId: 1
         },        
         {
             date: '2016-03-09 18:54:06.853',
-            commits: 12667,
+            commits: 5,
             userId: 1
         },        
         {
             date: '2016-03-10 18:54:06.853',
-            commits: 23354,
+            commits: 0,
             userId: 1
         },        
         {
             date: '2016-03-11 18:54:06.853',
-            commits: 13849,
+            commits: 0,
             userId: 1
         },        
         {
             date: '2016-04-12 18:54:06.853',
-            commits: 4994,
+            commits: 1,
             userId: 1
         },        
         {
             date: '2016-04-13 18:54:06.853',
-            commits: 7538,
+            commits: 2,
             userId: 1
         },        
         {
             date: '2016-04-14 18:54:06.853',
-            commits: 12466,
+            commits: 6,
             userId: 1
         },        
         {
             date: '2016-04-15 18:54:06.853',
-            commits: 14564,
+            commits: 24,
             userId: 1
         },        
         {
             date: '2016-04-16 18:54:06.853',
-            commits: 3453,
+            commits: 43,
             userId: 1
         },        
         {
             date: '2016-05-17 18:54:06.853',
-            commits: 6753,
+            commits: 43,
             userId: 1
         },        
         {
             date: '2016-05-18 18:54:06.853',
-            commits: 9463,
+            commits: 5,
             userId: 1
         },        
         {
             date: '2016-05-19 18:54:06.853',
-            commits: 14583,
+            commits: 33,
             userId: 1
         },        
         {
             date: '2016-05-20 18:54:06.853',
-            commits: 12475,
+            commits: 23,
             userId: 1
         },        
         {
             date: '2016-05-21 18:54:06.853',
-            commits: 7789,
+            commits: 12,
             userId: 1
         },        
         {
             date: '2016-05-22 18:54:06.853',
-            commits: 9274,
+            commits: 5,
             userId: 1
         },        
         {
             date: '2016-05-23 18:54:06.853',
-            commits: 37845,
+            commits: 21,
             userId: 1
         },        
         {
             date: '2016-05-24 18:54:06.853',
-            commits: 9355,
+            commits: 53,
             userId: 1
         },
         {
             date: '2016-05-25 18:54:06.853',
-            commits: 12453,
+            commits: 12,
             userId: 1
         },            
         {
             date: '2016-06-01 18:54:06.853',
-            commits: 5322,
+            commits: 11,
             userId: 1
         },            
         {
             date: '2016-06-02 18:54:06.853',
-            commits: 4534,
+            commits: 6,
             userId: 1
         },            
         {
             date: '2016-06-03 18:54:06.853',
-            commits: 9382,
+            commits: 4,
             userId: 1
         },            
         {
             date: '2016-06-04 18:54:06.853',
-            commits: 5583,
+            commits: 29,
             userId: 1
         },            
         {
             date: '2016-06-06 18:54:06.853',
-            commits: 12494,
+            commits: 4,
             userId: 1
         },            
         {
             date: '2016-06-06 18:54:06.853',
-            commits: 23455,
+            commits: 32,
             userId: 1
         },            
         {
             date: '2016-06-07 18:54:06.853',
-            commits: 12988,
+            commits: 23,
             userId: 1
         },            
         {
             date: '2016-06-08 18:54:06.853',
-            commits: 12947,
+            commits: 12,
             userId: 1
         },            
         {
             date: '2016-06-09 18:54:06.853',
-            commits: 11245,
+            commits: 45,
             userId: 1
         },            
         {
             date: '2016-06-10 18:54:06.853',
-            commits: 3874,
+            commits: 3,
             userId: 1
         },            
         {
             date: '2016-06-11 18:54:06.853',
-            commits: 8393,
+            commits: 2,
             userId: 1
         },            
         {
             date: '2016-06-12 18:54:06.853',
-            commits: 2843,
+            commits: 4,
             userId: 1
         },            
         {
             date: '2016-06-13 18:54:06.853',
-            commits: 8478,
+            commits: 6,
             userId: 1
         },            
         {
             date: '2016-06-14 18:54:06.853',
-            commits: 7483,
+            commits: 34,
             userId: 1
         },            
         {
             date: '2016-06-15 18:54:06.853',
-            commits: 9384,
+            commits: 2,
             userId: 1
         },            
         {
             date: '2016-06-16 18:54:06.853',
-            commits: 12453,
+            commits: 7,
             userId: 1
         },            
         {
             date: '2016-06-17 18:54:06.853',
-            commits: 12455,
+            commits: 19,
             userId: 1
         },            
         {
             date: '2016-06-18 18:54:06.853',
-            commits: 13585,
+            commits: 3,
             userId: 1
         },            
         {
             date: '2016-06-19 18:54:06.853',
-            commits: 9837,
+            commits: 5,
             userId: 1
         },            
         {
             date: '2016-06-20 18:54:06.853',
-            commits: 7393,
+            commits: 12,
             userId: 1
         }
     ];

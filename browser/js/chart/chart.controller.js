@@ -12,9 +12,15 @@ app.controller('chartController', function($scope, userData){
 		cat.forEach(function(item){
 			if(new Date(item.date).valueOf() >= startDate && new Date(item.date).valueOf() <= endDate){
 				dateArray.push(item[val])
-				if(name === 'fitbit') fitbitArr.push(item[val]);
-				if(name === 'github') githubArr.push(item[val]);
-				if(name === 'slack') slackArr.push(item[val]);
+				if(name === 'fitbit'){
+					fitbitArr.push(item[val]);
+				}
+				else if(name === 'github'){
+					githubArr.push(item[val]);
+				} 
+				else if(name === 'slack'){
+					slackArr.push(item[val]);
+				}
 			}
 		});
 
@@ -23,13 +29,11 @@ app.controller('chartController', function($scope, userData){
 		}, 0)
 	};
 
-	$scope.fitbitArr = fitbitArr;
-	$scope.slackArr = slackArr;
-	$scope.githubArr = githubArr;
-
 	$scope.fitbitSteps = getValForRange('fitbit', userData.fitbits, userData.fitbits.steps, 'steps', 1451692446852, 1466463246854);
 	$scope.githubCommits = getValForRange('github', userData.githubs, userData.githubs.commits, 'commits', 1451692446852, 1466463246854);
 	$scope.slackMessages = getValForRange('slack', userData.slacks, userData.slacks.messages, 'messages', 1451692446852, 1466463246854);
+
+
 
 
 	// Correlation Calculation
@@ -85,124 +89,49 @@ app.controller('chartController', function($scope, userData){
 	};
 
 
-	$scope.calcTest = calculate(fitbitArr, githubArr)
+	$scope.fitGitCor = calculate(fitbitArr, githubArr)
+	$scope.fitSlackCor = calculate(fitbitArr, githubArr)
+	$scope.gitSlackCor = calculate(fitbitArr, githubArr)
 
+
+
+	var fitGitData = function (fitbitArr, githubArr){
+		var arr = [];
+		console.log(fitbitArr)
+		for(var i = 0; i < fitbitArr.length; i++){
+			arr.push({x: fitbitArr[i], val_0: githubArr[i]})
+		}
+		return arr
+	}
+
+
+
+	// Graph Options
 
     $scope.options = {
       
       series: [
         {
-          dataset: "numerical",
+          dataset: "fitGitData",
           key: 'val_0', 
-          label: 'One', 
-          type: ['line', 'dot', 'line', 'area'],
+          label: 'Commits:', 
+          type: ['dot'],
           color: "rgb(126, 181, 63)",
-          interpolation: {mode: 'cardinal', tension: 0.7},
-          visible: true,
-        },
-        {
-          dataset: "numerical2",
-          key: 'val_0', 
-          type: ['line', 'dot', 'area'],
-          label: 'Two',
-          color: "rgb(200, 96, 69)",
           interpolation: {mode: 'cardinal', tension: 0.7},
           visible: true,
         }
       ],
-
 		axes: { x: { key: "x" } },
 		margin: { top: 5 }
-
     };
 
-	$scope.data = {
-		numerical: [
-			{
-			  x: 0,
-			  val_0: 0,
-			},
-			{
-			  x: 1,
-			  val_0: 0.993,
-			},
-			{
-			  x: 2,
-			  val_0: 1.947,
-			},
-			{
-			  x: 3,
-			  val_0: 2.823,
-			},
-			{
-			  x: 4,
-			  val_0: 3.587,
-			},
-			{
-			  x: 5,
-			  val_0: 4.207,
-			},
-			{
-			  x: 6,
-			  val_0: 4.66,
-			},
-			{
-			  x: 7,
-			  val_0: 4.927,
-			},
-			{
-			  x: 8,
-			  val_0: 4.998,
-			},
-			{
-			  x: 9,
-			  val_0: 4.869,
-			}
-			],
-			numerical2: [
-			{
-			  x: 0,
-			  val_0: -0,
-			},
-			{
-			  x: 1,
-			  val_0: -0.993,
-			},
-			{
-			  x: 2,
-			  val_0: -1.947,
-			},
-			{
-			  x: 3,
-			  val_0: -2.823,
-			},
-			{
-			  x: 4,
-			  val_0: -3.587,
-			},
-			{
-			  x: 5,
-			  val_0: -4.207,
-			},
-			{
-			  x: 6,
-			  val_0: -4.66,
-			},
-			{
-			  x: 7,
-			  val_0: -4.927,
-			},
-			{
-			  x: 8,
-			  val_0: -4.998,
-			},
-			{
-			  x: 9,
-			  val_0: -4.869,
-			}
-		],
 
+	$scope.data = {
+		fitGitData: fitGitData(fitbitArr, githubArr),
+		fitSlackData: fitGitData(fitbitArr, slackArr),
+		gitSlackData: fitGitData(githubArr, slackArr)
 	};
+
 
 
 
