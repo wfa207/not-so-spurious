@@ -15,5 +15,10 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+  },
+  "FITBIT": {
+    "clientID": '227TZF',
+    "clientSecret": '2d337049610a6836dddf3d3675b38c89',
+    "callbackURL": "/auth/fitbit/callback"
   }
 };
