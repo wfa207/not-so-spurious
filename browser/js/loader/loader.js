@@ -1,6 +1,6 @@
 app.directive('loader', function () {
     return {
         restrict: 'E',
-        templateUrl: 'js/loader/loader.html'
+        template: '<img src="/js/images/pizza2.gif"/>',
     };
 });

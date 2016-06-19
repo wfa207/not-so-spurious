@@ -1,6 +1,6 @@
 app.controller('chartController', function($scope, userData, $state, $timeout){
 
-	// sends user immediately to the line graphs page as soon as the resolve is complete
+	// immediately sends user to the line graphs state as soon as the resolve is complete
 	if($state.current.name === 'chartState'){	
 		$timeout(function() {
 	    	$state.go('chartState.line');
@@ -297,6 +297,33 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 		githubArrObj,
 		slackArrObj
 	};
+
+
+$scope.today = function() {
+    $scope.dt = new Date();
+};
+
+$scope.today();
+
+
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened = true;
+  };
+  
+  $scope.open2 = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened2 = true;
+  };
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
+
+  $scope.format = 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'
 
 })
 
