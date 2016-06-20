@@ -23,5 +23,10 @@ module.exports = {
         "clientID": process.env.GOOGLE_CLIENT_ID,
         "clientSecret": process.env.GOOGLE_CLIENT_SECRET,
         "callbackURL": process.env.GOOGLE_CALLBACK_URL
+    },
+    "GITHUB": {
+        "CLIENT_ID": process.env.GH_BASIC_CLIENT_ID,
+        "CLIENT_SECRET": process.env.GH_BASIC_SECRET_ID,
+        "callbackURL": process.env.GH_CALLBACK_URL
     }
 };

@@ -18,35 +18,34 @@ app.controller('SignupLoginCtrl', function ($scope, AuthService, $state, SignupL
 
     $scope.login = {};
     $scope.error = null;
-    $scope.signup = $state.current.name === 'splash-signup';
+
+    function authLogin(userInfo) {
+        return AuthService.login(userInfo)
+        .then(function () {
+            $state.go('ConnectionState');
+        });
+    }
 
     $scope.sendLogin = function (loginInfo) {
 
-        $scope.error = null;
-
-        function authLogin(userInfo) {
-            return AuthService.login(userInfo)
-            .then(function () {
-                $state.go('membersOnly'); // NEED TO CHANGE to wherever we want to redirect MEMBERS
-            });
-        }
-
-        if ($scope.signup) {
-            SignupLoginFactory.createUser(loginInfo)
-            .then(function(user) {
-                authLogin(loginInfo);
-            });
-
-        } else {
-            authLogin(loginInfo)
-            .catch(function () {
-                $scope.error = 'Invalid login credentials.';
-            });
-        }
+        authLogin(loginInfo)
+        .catch(function () {
+            $scope.error = 'Invalid login credentials.';
+        });
     };
+
+    $scope.sendSignin = function(signinInfo) {
+        SignupLoginFactory.createUser(signinInfo)
+            .then(function() {
+                authLogin(signinInfo);
+            })
+            .catch(function() {
+                $scope.error = 'This user already exists!';
+            });
+    }
 });
 
-app.factory('SignupLoginFactory', function($http) {
+app.factory('SignupLoginFactory', function($http, $q) {
 
     var SignupLoginFactory = {};
 
@@ -57,7 +56,10 @@ app.factory('SignupLoginFactory', function($http) {
 
         obj.createUser = function(user) {
             return $http.post('api/users', user)
-            .then(getData);
+            .then(getData)
+            .catch(function() {
+                return $q.reject({message: 'This user already exists!'});
+            })
         }
 
     })(SignupLoginFactory);

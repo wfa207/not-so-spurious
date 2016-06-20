@@ -65,7 +65,9 @@ h3 {
 }
 
 body {
-  background: #fdfdfd;
+	background-color: #ffffff;
+	/*padding-top: 120px;*/
+  color: #212121;
 }
 
 @mixin clearfix {
@@ -81,6 +83,6 @@ body {
   margin: 0 auto;
 }
 
-@import 'directives/main';
+@import 'directives/navbar';
 @import 'tutorial/main';
 @import 'signup-login/main';

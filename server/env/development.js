@@ -20,5 +20,10 @@ module.exports = {
     "clientID": '227TZF',
     "clientSecret": '2d337049610a6836dddf3d3675b38c89',
     "callbackURL": "/auth/fitbit/callback"
+  },
+  "GITHUB": {
+    "clientID": "1a90bc5158519632a3de",
+    "clientSecret": "9777c27c6353bf4ab884b7fe712660d192647add",
+    "callbackURL": "/auth/github/callback"
   }
 };

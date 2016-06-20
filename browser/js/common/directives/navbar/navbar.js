@@ -7,7 +7,8 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         link: function (scope) {
 
             scope.items = [
-                { label: 'Members Only', state: 'membersOnly', auth: true }
+                { label: 'Members Only', state: 'membersOnly', auth: true },
+                { label: 'Connections', state: 'ConnectionState', auth: true }
             ];
 
             scope.user = null;

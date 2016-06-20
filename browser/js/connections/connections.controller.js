@@ -1,5 +1,7 @@
-app.controller('ConnectionsController', function($scope, theConnections, ConnectionFactory, $state, $uibModal, $log){
+app.controller('ConnectionsController', function($scope, theConnections, ConnectionFactory, $state, $uibModal, $log, Session) {
 	$scope.theConnections = theConnections;
+	$scope.user = Session.user
+	console.log(Session);
 
 	$scope.requestedConnections = ConnectionFactory.requestedConnections;
 
@@ -26,6 +28,5 @@ app.controller('ConnectionsController', function($scope, theConnections, Connect
 	$scope.toggleAnimation = function () {
 		$scope.animationsEnabled = !$scope.animationsEnabled;
 	};
-
 
 });

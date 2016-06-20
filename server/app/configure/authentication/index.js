@@ -7,6 +7,7 @@ var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var ENABLED_AUTH_STRATEGIES = [
     'local',
     'fitbit'
+    'github'
     //'twitter',
     //'facebook',
     //'google'
@@ -63,7 +64,6 @@ module.exports = function (app, db) {
         }
     });
 
-    // Simple /logout route.
     app.get('/logout', function (req, res) {
         req.logout();
         res.status(200).end();
