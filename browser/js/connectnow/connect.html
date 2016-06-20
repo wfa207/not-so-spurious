@@ -1,8 +1,10 @@
 <div class="container">
+	
 	<div class="row" ng-repeat="connect in theConnections">
+		
 		<div class="col-md-2"></div>
 		
-		<div class="col-md-8">
+		<div class="col-md-8 nav">
 			<form ng-if="connect.clicked">
 			<h3>{{connect.name}}</h3>
 				<fieldset class="form-group">
@@ -14,11 +16,17 @@
 				    <label for="exampleInputPassword1">Password</label>
 				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
 				  </fieldset>
-				  <button ui-sref='chartState({id: 1})' type="submit" class="btn btn-primary">Submit</button>
 			</form>
-			</br></br></br></br>
 		</div>
 
 		<div class="col-md-2"></div>
+
 	</div>
+
+	<div class="row nav">
+		<div class="col-md-12 text-center">
+			<button ui-sref="chartState({id: 1})" type="submit" class="btn btn-success">Submit</button>
+		</div>
+	</div>
+
 </div>

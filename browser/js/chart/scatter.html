@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container nav">
+	
 	<div class="row nav-buttons">
 		<div class="col-md-12 text-center">
 			<div class="btn-group" data-toggle="buttons">
@@ -11,6 +12,39 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row">		
+		<div class="col-md-4"></div>
+		<div class="col-md-2 text-center">
+			<!-- <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre> -->
+            <p class="input-group">
+            	<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close" />
+            	<span class="input-group-btn">
+            		<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button><br>
+            	</span>
+            </p>
+		</div>
+
+		<div class="col-md-2 text-center">
+			<!-- <pre>Selected date is: <em>{{dtg | date:'fullDate' }}</em></pre> -->
+            <p class="input-group">
+            	<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dtg" is-open="opened2" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close" />
+            	<span class="input-group-btn">
+            		<button class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            	</span>
+            </p>
+		</div>
+
+		<div class="col-md-4"></div>
+
+	</div>
+
+	<div class="row text-center">
+		<div class="col-md-12">
+			<a ng-click="date1 = dt; date2 = dtg; generateData(dt, dtg)"><i class="fa fa-refresh" aria-hidden="true"></i> Correlate with new date range</a>
+		</div>
+	</div>
+
 </div>
 
 

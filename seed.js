@@ -42,7 +42,7 @@ var seedConnections = function () {
         },
         {
             name: 'Slack',
-            logoUrl: 'https://upload.wikimedia.org/wikipedia/en/7/76/Slack_Icon.png'
+            logoUrl: 'http://www.greenmellenmedia.com/wp-content/uploads/slack-chat.png'
         },
         {
             name: 'RunKeeper',

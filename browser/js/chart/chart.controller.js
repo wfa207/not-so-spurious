@@ -17,107 +17,65 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 	var githubArrObj = [];
 	var slackArrObj = [];
 
-	$scope.generateData = function(d1, d2){
+
+	$scope.generateData = function(){
+
+		// mkae this date of first data entry
+		if(!$scope.date1) $scope.date1 = 1451692446852;
+		// make this date of last data entry
+		if(!$scope.date2) $scope.date2 = 1466463246854;
+
+
+		if(typeof $scope.date1 !== 'number') $scope.date1 = new Date($scope.date1).valueOf();
+		if(typeof $scope.date2 !== 'number') $scope.date2 = new Date($scope.date2).valueOf();
+
+		// if they enter a blank entry
+		if($scope.date1 === NaN) $scope.date1 = 1451692446852;
+		if($scope.date2 === NaN) $scope.date2 = 1466463246854;
+
 
 		var i = 0;
 		var j = 0;
 		var k = 0;
 
-		// make this the date of first data entry
-		if(!d1) d1 = 1451692446852;
-		if(!d2) d2 = 1466463246854;
-
 		// This is for the scatter points
 		fitbitArr = userData.fitbits.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.steps
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2) return obj.steps
 		});
 		githubArr = userData.githubs.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.commits
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2) return obj.commits
 		});
 		slackArr = userData.slacks.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.messages
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2) return obj.messages
 		});
 
 
-			
+		// This is for the line graphs
 		fitbitArrObj = userData.fitbits.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2){
 				i++
 				return {x: i, val_0: obj.steps}
 			}
 		});
-
 		githubArrObj = userData.githubs.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2){
 				j++
 				return {x: j, val_0: obj.commits}
 			}
 		});
-
 		slackArrObj = userData.slacks.map(function(obj){ 
-			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
+			if(new Date(obj.date).valueOf() >= $scope.date1 && new Date(obj.date).valueOf() <= $scope.date2){
 				k++
 				return {x: k, val_0: obj.messages}
 			}
 		});
 
+		console.log($scope.$$phase)
 		console.log(fitbitArr)
 
 	}
 
 	$scope.generateData()
-
-
-	// $scope.getValForRange = function(name, cat, valType, val, startDate, endDate){
-		
-	// 	fitbitArr = [];
-	// 	console.log('fitbit arr1', fitbitArr)
-	// 	githubArr = [];
-	// 	slackArr = [];
-
-	// 	var dateArray = [];
-	// 	var i = 0;
-
-	// 	// update this to be the date of the first data entry
-	// 	if(!startDate) startDate = 1451692446852;
-	// 	// console.log('start', startDate)
-	// 	// update this to be the date of the last data entry
-	// 	if(!endDate) endDate = 1466463246854;
-	// 	// console.log('end', endDate)
-
-	// 	cat.forEach(function(item){
-	// 		if(new Date(item.date).valueOf() >= startDate && new Date(item.date).valueOf() <= endDate){
-	// 			dateArray.push(item[val])
-	// 			if(name === 'fitbit'){
-	// 				fitbitArr.push(item[val]);
-	// 				fitbitArrObj.push({x: i, val_0: item[val]});
-	// 			}
-	// 			else if(name === 'github'){
-	// 				githubArr.push(item[val]);
-	// 				githubArrObj.push({x: i, val_0: item[val]});
-	// 			} 
-	// 			else if(name === 'slack'){
-	// 				slackArr.push(item[val]);
-	// 				slackArrObj.push({x: i, val_0: item[val]});
-	// 			}
-	// 			i++
-	// 		}
-	// 	});
-
-	// 	console.log('fitbit arr2', fitbitArr)
-	// 	// console.log(githubArr)
-	// 	// console.log(slackArr)
-
-	// 	return dateArray.reduce(function(a,b){
-	// 		return a + b
-	// 	}, 0)
-	// };
-
-	// $scope.getValForRange('fitbit', userData.fitbits, userData.fitbits.steps, 'steps');
-	// $scope.getValForRange('github', userData.githubs, userData.githubs.commits, 'commits');
-	// $scope.getValForRange('slack', userData.slacks, userData.slacks.messages, 'messages');
-
-
 
 
 	// Correlation Calculation
@@ -209,7 +167,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
         {
           dataset: "fitGitData",
           key: 'val_0', 
-          label: 'Commits:', 
+          label: 'Commits', 
           type: ['dot'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -228,7 +186,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "fitbitArrObj",
           axis: "y",
           key: 'val_0', 
-          label: 'Steps:', 
+          label: 'Steps', 
           type: ['dot', 'line'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -238,7 +196,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "githubArrObj",
           axis: "y2",
           key: 'val_0', 
-          label: 'Commits:', 
+          label: 'Commits', 
           type: ['dot', 'line'],
           color: "rgb(200, 96, 69)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -260,7 +218,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
         {
           dataset: "fitSlackData",
           key: 'val_0', 
-          label: 'Messages:', 
+          label: 'Messages', 
           type: ['dot'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -279,7 +237,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "fitbitArrObj",
           axis: "y",
           key: 'val_0', 
-          label: 'Steps:', 
+          label: 'Steps', 
           type: ['dot', 'line'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -289,7 +247,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "slackArrObj",
           axis: "y2",
           key: 'val_0', 
-          label: 'Messages:', 
+          label: 'Messages', 
           type: ['dot', 'line'],
           color: "rgb(200, 96, 69)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -311,7 +269,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
         {
           dataset: "gitSlackData",
           key: 'val_0', 
-          label: 'Messages:', 
+          label: 'Commits', 
           type: ['dot'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -330,7 +288,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "githubArrObj",
           axis: "y",
           key: 'val_0', 
-          label: 'Steps:', 
+          label: 'Commits', 
           type: ['dot', 'line'],
           color: "rgb(126, 181, 63)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -340,7 +298,7 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
           dataset: "slackArrObj",
           axis: "y2",
           key: 'val_0', 
-          label: 'Messages:', 
+          label: 'Messages', 
           type: ['dot', 'line'],
           color: "rgb(200, 96, 69)",
           interpolation: {mode: 'cardinal', tension: 0.7},
@@ -352,12 +310,12 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
     };
 
 
-    console.log(fitbitArr)
+    console.log('seems like a digest', $scope.date1)
 
 	$scope.dataScatter = {
 		fitGitData: scatterDataGenerator(fitbitArr, githubArr),
 		fitSlackData: scatterDataGenerator(fitbitArr, slackArr),
-		gitSlackData: scatterDataGenerator(githubArr, slackArr)
+		gitSlackData: scatterDataGenerator(slackArr, githubArr)
 	};
 
 	$scope.dataLine = {
@@ -365,8 +323,6 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 		githubArrObj,
 		slackArrObj
 	};
-
-
 
 
 	// Date Picker
