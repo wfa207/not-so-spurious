@@ -2,12 +2,12 @@
 
 var passport = require('passport');
 var GithubStrategy = require('passport-github2').Strategy;
+var http = require('http');
 
 module.exports = function(app, db) {
 
 	var User = db.model('user');
-	var Github = db.model('github');
-
+	var GithubAccount = db.model('githubAccount');
 	var githubConfig = app.getValue('env').GITHUB;
 
 	var githubCredentials = {
@@ -19,34 +19,37 @@ module.exports = function(app, db) {
 
 	var verifyCallback = function(req, accessToken, refreshToken, profile, done) {
 
-		// Create Github
-		// Keep data, but update / (delete) association
+		var user = req.user;
 
-		var sessionUser = req.user.dataValues;
+		console.log('Access Token(prior): ', accessToken);
 
-		if (!req.user) {
+		var updatedGithubAccount = {
+			username: profile.username,
+			profileUrl: profile.profileUrl,
+			accessToken: accessToken
+		};
+
+		if (!user) {
 			var err = new Error('You must be signed in to use the app!');
 			err.status = 401;
 			done(err);
 		} else {
-			Github.findOrCreate({
+			GithubAccount.findOrCreate({
 				where: {
 					id: profile.id
 				},
-				defaults: {
-					accessToken: accessToken
-				}
+				defaults: updatedGithubAccount
 			})
-			.spread(function(github, created) {
-				User.findById(req.user.id, {
-					include: [Github]
-				})
+			.spread(function(githubAccount, created) {
+				if (!created) {
+					githubAccount.update(updatedGithubAccount);
+				}
+				User.findById(user.id)
 				.then(function(user) {
-					var input = user.githubId ? null : github;
-					user.setGithub(input)
+					user.setGithubAccount(githubAccount)
 					.then(function(user) {
-						console.log('User: ', user);
-						done(null, user);
+						console.log("Access Token: ", accessToken);
+						done(null, githubAccount);
 					})
 					.catch(done);
 				})
@@ -59,10 +62,24 @@ module.exports = function(app, db) {
 
 	passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-	app.get('/auth/github', passport.authorize('github', { scope: [ 'user:email', 'repo' ] }));
+	app.get('/auth/github', passport.authorize('github', { scope: [ 'user', 'repo' ] }));
 
 	app.get('/auth/github/callback', passport.authorize('github', {
-		successRedirect: '/',
-		failureRedirect: '/' 
+		successRedirect: '/connections',
+		failureRedirect: '/connections' 
 	}));
+
+	app.get('/unlink/github', function(req, res, next) {
+		var member = req.user;
+
+		User.findById(member.id)
+		.then(function(member) {
+			member.setGithubAccount(null)
+			.then(function(member) {
+				res.redirect('/connections'); // NEED TO CHANGE
+			})
+		})
+		.catch(next);
+	});
+
 }
