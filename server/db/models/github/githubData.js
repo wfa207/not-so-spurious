@@ -13,14 +13,20 @@ module.exports = function(db) {
 		repoName: {
 			type: Sequelize.STRING
 		},
-		collaborators: {
-			type: Sequelize.INTEGER
+		contributors: {
+			type: Sequelize.STRING
 		},
 		commits: {
-			type: Sequelize.INTEGER
+			type: Sequelize.STRING
 		},
-		branches: {
-			type: Sequelize.INTEGER
+		codeFrequency: {
+			type: Sequelize.STRING
+		},
+		participation: {
+			type: Sequelize.STRING
+		},
+		punchCard: {
+			type: Sequelize.STRING
 		}
 	});
 

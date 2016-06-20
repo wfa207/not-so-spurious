@@ -29,9 +29,11 @@ router.get('/', function(req, res, next) {
 
 		var dataPaths = {
 			repos: '/users/' + githubUN + '/repos',
-			collaborators: '/repos/' + githubUN + '/' + repoName + '/collaborators',
-			commits: '/repos/' + githubUN + '/' + repoName + '/commits',
-			branches: '/repos/' + githubUN + '/' + repoName + '/branches',
+			contributors: '/repos/' + githubUN + '/' + repoName + '/stats/contributors',
+			commits: '/repos/' + githubUN + '/' + repoName + '/stats/commit_activity',
+			codeFrequency: '/repos/' + githubUN + '/' + repoName + '/stats/code_frequency',
+			participation: '/repos/' + githubUN + '/' + repoName + '/stats/participation',
+			punchCard: '/repos/' + githubUN + '/' + repoName + '/stats/punch_card'
 		}
 
 		var dataUrl = host + dataPaths[dataType];
@@ -59,61 +61,69 @@ router.get('/', function(req, res, next) {
 		.catch(next);
 	};
 
-	getData('repos')
-	.then(function(repos) {
-		res.json(repos);
-		var updatingRepos = repos.map(function(repo) {
-			var dataFields = ['collaborators', 'commits', 'branches'];
-			var gettingDataFields = dataFields.map(function(dataField) {
-				return getData(dataField, repo.name)
-				.then(function(repoData) {
-					if (!repoData.message) {
-						return { [dataField]: repoData }
-					}
-				})
-				.catch(next);
-			});
+	res.json(res);
 
-			return Promise.all(gettingDataFields)
-			.then(function(dataFieldArr) {
-				dataFieldArr.forEach(function(dataFieldObj) {
-					var key = Object.keys(dataFieldObj)[0];
-					repo[key] = dataFieldObj[key];
-				});
-				return repo;
-			})
-			.catch(next);
-		});
+	// getData('commits', 'auther-pt-1')
+	// .then(function(repo) {
+	// 	console.log(res);
+	// 	res.json(repo);
+	// });
 
-		return Promise.all(updatingRepos)
-		.then(function(repos) {
-			repos.forEach(function(repo) {
-				GithubData.findOrCreate({
-					where: {
-						id: repo.id
-					},
-					defaults: {
-						repoName: repo.name,
-						collaborators: repo.collaborators.length,
-						commits: repo.commits.length,
-						branches: repo.branches.length
-					}
-				})
-				.spread(function(output, created) {
-					if (!created) {
-						output.update(repo)
-						.then(function() {
-							next();
-						})
-						.catch(next);
-					}
-				})
-				.catch(next);
-			})
-		})
-		.catch(next);
-	})
-	.catch(next);
+	// getData('repos')
+	// .then(function(repos) {
+	// 	var updatingRepos = repos.map(function(repo) {
+	// 		var dataFields = ['collaborators', 'commits', 'branches'];
+	// 		var gettingDataFields = dataFields.map(function(dataField) {
+	// 			return getData(dataField, repo.name)
+	// 			.then(function(repoData) {
+	// 				if (!repoData.documentation_url) {
+	// 					return { [dataField]: repoData }
+	// 				}
+	// 			})
+	// 			.catch(next);
+	// 		});
+
+	// 		return Promise.all(gettingDataFields)
+	// 		.then(function(dataFieldArr) {
+	// 			dataFieldArr.forEach(function(dataFieldObj) {
+	// 				var key = Object.keys(dataFieldObj)[0];
+	// 				repo[key] = dataFieldObj[key];
+	// 			});
+	// 			return repo;
+	// 		})
+	// 		.catch(next);
+	// 	});
+
+	// 	return Promise.all(updatingRepos)
+	// 	.then(function(repos) {
+	// 		res.json(repos);
+	// 		repos.forEach(function(repo) {
+	// 			GithubData.findOrCreate({
+	// 				where: {
+	// 					id: repo.id
+	// 				},
+	// 				defaults: {
+	// 					repoName: repo.name,
+	// 					collaborators: repo.collaborators.length,
+	// 					commits: repo.commits.length,
+	// 					branches: repo.branches.length
+	// 				}
+	// 			})
+	// 			.spread(function(output, created) {
+	// 				if (!created) {
+	// 					output.update(repo)
+	// 					.then(function() {
+	// 						next();
+	// 					})
+	// 					.catch(next);
+	// 				}
+	// 			})
+	// 			.catch(next);
+	// 		})
+	// 	})
+	// 	.catch(next);
+	// })
+	// .catch(next);
 });
 
 module.exports = router;
