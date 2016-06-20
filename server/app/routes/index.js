@@ -3,6 +3,7 @@ var router = require('express').Router();
 module.exports = router;
 
 router.use('/users', require('./users'));
+router.use('/charts', require('./charts'));
 router.use('/data', require('./data'));
 router.use('/connections', require('./connections'));
 router.use('/members', require('./members'));
