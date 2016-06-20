@@ -1,4 +1,6 @@
 <div class="container">
+	
+<!-- <pre>{{userData.githubs | json}}</pre> -->
 	<div class="row nav-buttons">
 		<div class="col-md-12 text-center">
 			<div class="btn-group" data-toggle="buttons">
@@ -50,6 +52,7 @@
 		<div class="col-md-2"></div>
 
 		<div class="col-md-4">
+			{{fitbitSteps}}
 			<pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
             <p class="input-group">
             	<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" ng-required="true" close-text="Close" />
@@ -72,6 +75,16 @@
 		<div class="col-md-2"></div>
 
 	</div>
+
+
+	<div class="row text-center">
+		
+		<div class="col-md-12">
+			<a ng-click="generateData(dt, dtg)"><i class="fa fa-refresh" aria-hidden="true"></i> Correlate with new dates</a>		
+		</div>
+
+	</div>
+
 
 
 

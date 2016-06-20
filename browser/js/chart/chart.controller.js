@@ -7,53 +7,115 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 	    }, 0);
 	}
 
-
-	$scope.getDates = function(date1, date2){
-		$scope.date1 = date1;
-		$scope.date2 = date2;
-	}
-
 	$scope.userData = userData;
 
-	var fitbitArr = [];
-	var githubArr = [];
-	var slackArr = [];
+	var fitbitArr;
+	var githubArr;
+	var slackArr;
 
 	var fitbitArrObj = [];
 	var githubArrObj = [];
 	var slackArrObj = [];
 
-	function getValForRange(name, cat, valType, val, startDate, endDate){
-		var dateArray = [];
-		var i = 0;
+	$scope.generateData = function(d1, d2){
 
-		cat.forEach(function(item){
-			if(new Date(item.date).valueOf() >= startDate && new Date(item.date).valueOf() <= endDate){
-				dateArray.push(item[val])
-				if(name === 'fitbit'){
-					fitbitArr.push(item[val]);
-					fitbitArrObj.push({x: i, val_0: item[val]});
-				}
-				else if(name === 'github'){
-					githubArr.push(item[val]);
-					githubArrObj.push({x: i, val_0: item[val]});
-				} 
-				else if(name === 'slack'){
-					slackArr.push(item[val]);
-					slackArrObj.push({x: i, val_0: item[val]});
-				}
+		var i = 0;
+		var j = 0;
+		var k = 0;
+
+		// make this the date of first data entry
+		if(!d1) d1 = 1451692446852;
+		if(!d2) d2 = 1466463246854;
+
+		// This is for the scatter points
+		fitbitArr = userData.fitbits.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.steps
+		});
+		githubArr = userData.githubs.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.commits
+		});
+		slackArr = userData.slacks.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2) return obj.messages
+		});
+
+
+			
+		fitbitArrObj = userData.fitbits.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
 				i++
+				return {x: i, val_0: obj.steps}
 			}
 		});
 
-		return dateArray.reduce(function(a,b){
-			return a + b
-		}, 0)
-	};
+		githubArrObj = userData.githubs.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
+				j++
+				return {x: j, val_0: obj.commits}
+			}
+		});
 
-	$scope.fitbitSteps = getValForRange('fitbit', userData.fitbits, userData.fitbits.steps, 'steps', 1451692446852, 1466463246854);
-	$scope.githubCommits = getValForRange('github', userData.githubs, userData.githubs.commits, 'commits', 1451692446852, 1466463246854);
-	$scope.slackMessages = getValForRange('slack', userData.slacks, userData.slacks.messages, 'messages', 1451692446852, 1466463246854);
+		slackArrObj = userData.slacks.map(function(obj){ 
+			if(new Date(obj.date).valueOf() >= d1 && new Date(obj.date).valueOf() <= d2){
+				k++
+				return {x: k, val_0: obj.messages}
+			}
+		});
+
+		console.log(fitbitArr)
+
+	}
+
+	$scope.generateData()
+
+
+	// $scope.getValForRange = function(name, cat, valType, val, startDate, endDate){
+		
+	// 	fitbitArr = [];
+	// 	console.log('fitbit arr1', fitbitArr)
+	// 	githubArr = [];
+	// 	slackArr = [];
+
+	// 	var dateArray = [];
+	// 	var i = 0;
+
+	// 	// update this to be the date of the first data entry
+	// 	if(!startDate) startDate = 1451692446852;
+	// 	// console.log('start', startDate)
+	// 	// update this to be the date of the last data entry
+	// 	if(!endDate) endDate = 1466463246854;
+	// 	// console.log('end', endDate)
+
+	// 	cat.forEach(function(item){
+	// 		if(new Date(item.date).valueOf() >= startDate && new Date(item.date).valueOf() <= endDate){
+	// 			dateArray.push(item[val])
+	// 			if(name === 'fitbit'){
+	// 				fitbitArr.push(item[val]);
+	// 				fitbitArrObj.push({x: i, val_0: item[val]});
+	// 			}
+	// 			else if(name === 'github'){
+	// 				githubArr.push(item[val]);
+	// 				githubArrObj.push({x: i, val_0: item[val]});
+	// 			} 
+	// 			else if(name === 'slack'){
+	// 				slackArr.push(item[val]);
+	// 				slackArrObj.push({x: i, val_0: item[val]});
+	// 			}
+	// 			i++
+	// 		}
+	// 	});
+
+	// 	console.log('fitbit arr2', fitbitArr)
+	// 	// console.log(githubArr)
+	// 	// console.log(slackArr)
+
+	// 	return dateArray.reduce(function(a,b){
+	// 		return a + b
+	// 	}, 0)
+	// };
+
+	// $scope.getValForRange('fitbit', userData.fitbits, userData.fitbits.steps, 'steps');
+	// $scope.getValForRange('github', userData.githubs, userData.githubs.commits, 'commits');
+	// $scope.getValForRange('slack', userData.slacks, userData.slacks.messages, 'messages');
 
 
 
@@ -289,6 +351,8 @@ app.controller('chartController', function($scope, userData, $state, $timeout){
 		margin: { top: 5 }
     };
 
+
+    console.log(fitbitArr)
 
 	$scope.dataScatter = {
 		fitGitData: scatterDataGenerator(fitbitArr, githubArr),
