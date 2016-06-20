@@ -22,7 +22,7 @@ app.controller('SignupLoginCtrl', function ($scope, AuthService, $state, SignupL
     function authLogin(userInfo) {
         return AuthService.login(userInfo)
         .then(function () {
-            $state.go('membersOnly'); // NEED TO CHANGE to wherever we want to redirect MEMBERS
+            $state.go('ConnectionState');
         });
     }
 

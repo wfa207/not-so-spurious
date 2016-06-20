@@ -65,8 +65,8 @@ module.exports = function(app, db) {
 	app.get('/auth/github', passport.authorize('github', { scope: [ 'user', 'repo' ] }));
 
 	app.get('/auth/github/callback', passport.authorize('github', {
-		successRedirect: 'https://api.github.com/user',
-		failureRedirect: '/' 
+		successRedirect: '/connections',
+		failureRedirect: '/connections' 
 	}));
 
 	app.get('/unlink/github', function(req, res, next) {
@@ -76,7 +76,7 @@ module.exports = function(app, db) {
 		.then(function(member) {
 			member.setGithubAccount(null)
 			.then(function(member) {
-				res.redirect('/'); // NEED TO CHANGE
+				res.redirect('/connections'); // NEED TO CHANGE
 			})
 		})
 		.catch(next);

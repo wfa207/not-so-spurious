@@ -1,5 +1,7 @@
-app.controller('ConnectionsController', function($scope, theConnections, ConnectionFactory, $state){
+app.controller('ConnectionsController', function($scope, theConnections, ConnectionFactory, $state, Session){
 	$scope.theConnections = theConnections;
+	$scope.user = Session.user
+	console.log(Session);
 
 	$scope.requestedConnections = ConnectionFactory.requestedConnections;
 
